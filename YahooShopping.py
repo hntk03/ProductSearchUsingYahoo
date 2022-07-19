@@ -16,7 +16,13 @@ class ProductSearch:
 
         call = requests.get(url)
         res_dict = json.loads(call.content)
-        self.result = res_dict['hits']
+        if len(res_dict['hits']) == 0:
+            self.result = None
+        else:
+            self.result = res_dict['hits']
 
     def get_product_name(self):
-        return self.result[0]['name']
+        if self.result is not None:
+            return self.result[0]['name']
+        else:
+            return ""
